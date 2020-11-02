@@ -63,7 +63,10 @@ class Renderer():
 
     def render(self, img, projection_matrix):
         """
-        Render a loaded obj model into the current video frame
+        Render a loaded obj model into the current video frame.
+        The input image should be a opencv image.
+        The projection matrix in input has to be a matrix and it is supposed to be the projection matrix that represent
+        the transformation from the AprilTag frame to the image frame.
         """
         scale_matrix = np.eye(3) * 0.5
         h, w = 0,0

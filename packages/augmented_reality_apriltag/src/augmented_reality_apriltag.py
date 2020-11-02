@@ -17,19 +17,23 @@ import rospkg
 
 """
 
-This is a template made for the exercise CRA1.
-Here you need to project the model in 'models' on an AprilTag, we provide you a 
-class that render the obj file.
+This is a template that can be used as a starting point for the CRA1 exercise.
+You need to project the model file in the 'models' directory on an AprilTag.
+To help you with that, we have provided you with the Renderer class that render the obj file.
 
 """
 
-class Node(DTROS):
+class ARNode(DTROS):
 
     def __init__(self, node_name):
 
         # Initialize the DTROS parent class
-        super(Node, self).__init__(node_name=node_name,node_type=NodeType.GENERIC)        
+        super(ARNode, self).__init__(node_name=node_name,node_type=NodeType.GENERIC)
         self.veh = rospy.get_namespace().strip("/")
+
+        rospack = rospkg.RosPack()
+        # Initialize an instance of Renderer giving the model in input.
+        self.renderer = Renderer(rospack.get_path('augmented_reality_apriltag') + '/src/models/duckie.obj')
 
         #
         #   Write your code here
@@ -40,12 +44,12 @@ class Node(DTROS):
     
     def projection_matrix(self, intrinsic, homography):
         """
-            Write here you projection matrix, namely the matrix
-            that goes from the camera to the AprilTag
+            Write here the compuatation for the projection matrix, namely the matrix
+            that maps the camera reference frame to the AprilTag reference frame.
         """
 
     #
-    # TEMPLATE CODE
+    # Write your code here
     #
 
     def readImage(self, msg_image):
@@ -60,16 +64,15 @@ class Node(DTROS):
             cv_image = self.bridge.compressed_imgmsg_to_cv2(msg_image)
             return cv_image
         except CvBridgeError as e:
-            print(e)
+            self.log(e)
             return []
 
     def readYamlFile(self,fname):
         """
-            Reads the file you pass using 'fname'
+            Reads the 'fname' yaml file and returns a dictionary with its input.
 
-            E.G. : 
-                the calibration file is located in :
-                `/data/config/calibrations/filename/DUCKIEBOT_NAME.yaml`
+            You will find the calibration files you need in:
+            `/data/config/calibrations/`
         """
         with open(fname, 'r') as in_file:
             try:
@@ -83,11 +86,11 @@ class Node(DTROS):
 
 
     def onShutdown(self):
-        super(Node, self).onShutdown()
+        super(ARNode, self).onShutdown()
 
 
 if __name__ == '__main__':
     # Initialize the node
-    camera_node = Node(node_name='augmented_reality_apriltag_node')
+    camera_node = ARNode(node_name='augmented_reality_apriltag_node')
     # Keep it spinning to keep the node alive
     rospy.spin()
