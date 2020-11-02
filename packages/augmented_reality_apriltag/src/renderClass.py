@@ -68,16 +68,11 @@ class Renderer():
         The projection matrix in input has to be a matrix and it is supposed to be the projection matrix that represent
         the transformation from the AprilTag frame to the image frame.
         """
-        scale_matrix = np.eye(3) * 0.5
-        h, w = 0,0
 
         for face in self.faces:
             face_vertices = face[0]
             points = np.array([self.vertices[vertex - 1] for vertex in face_vertices])
-            points = np.dot(points, scale_matrix)
-            # render model in the middle of the reference surface. To do so,
-            # model points must be displaced
-            points = np.array([[p[0] + w / 2, p[1] + h / 2, p[2]] for p in points])
+            points = np.array([[p[0], p[1], p[2]] for p in points])
             dst = cv2.perspectiveTransform(points.reshape(-1, 1, 3), projection_matrix)
             imgpts = np.int32(dst)
             color = self.__hex_to_rgb(face[-1])
