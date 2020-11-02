@@ -48,9 +48,9 @@ class ARNode(DTROS):
             that maps the camera reference frame to the AprilTag reference frame.
         """
 
-    #
-    # Write your code here
-    #
+        #
+        # Write your code here
+        #
 
     def readImage(self, msg_image):
         """
