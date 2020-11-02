@@ -13,6 +13,9 @@ import cv2
 class Renderer():
 
     def __init__(self, obj_path):
+        """
+        :param obj_path: is the path to the .obj model file to render
+        """
         """Loads a Wavefront OBJ file. """
         self.vertices = []
         self.normals = []
@@ -64,10 +67,12 @@ class Renderer():
     def render(self, img, projection_matrix):
         """
         Render a loaded obj model into the current video frame.
-        The input image should be a opencv image.
-        The projection matrix in input has to be a matrix and it is supposed to be the projection matrix that represent
-        the transformation from the AprilTag frame to the image frame.
+        :param img: opencv image on which the model will be rendered.
+        :param projection_matrix: numpy array 3x4 floating point matrix and it is supposed to be the projection
+        matrix that represents the transformation from the AprilTag reference frame to the image frame.
+        :return ima: opencv image with rendered model
         """
+
 
         for face in self.faces:
             face_vertices = face[0]
