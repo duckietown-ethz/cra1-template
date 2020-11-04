@@ -1,7 +1,7 @@
 # parameters
-ARG REPO_NAME="arCRA12020"
-ARG DESCRIPTION="Exercise CRA1 2020"
-ARG MAINTAINER="Vincenzo Polizzi (vpolizzi@student.ethz.ch)"
+ARG REPO_NAME="<REPO_NAME_HERE>"
+ARG DESCRIPTION="<DESCRIPTION_HERE>"
+ARG MAINTAINER="<YOUR_FULL_NAME> (<YOUR_EMAIL_ADDRESS>)"
 # pick an icon from: https://fontawesome.com/v4.7.0/icons/
 ARG ICON="cube"
 
